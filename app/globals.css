@@ -6,6 +6,17 @@
   --muted: #5f5a56;
   --accent: #e07a5f;
   --border: rgba(24, 24, 24, 0.75);
+  --surface-hover: rgba(255, 255, 255, 0.32);
+  --accent-hover: rgba(224, 122, 95, 0.16);
+}
+
+html[data-theme="dark"] {
+  --background: #000000;
+  --foreground: #ffffff;
+  --muted: rgba(255, 255, 255, 0.72);
+  --border: rgba(255, 255, 255, 0.74);
+  --surface-hover: rgba(255, 255, 255, 0.08);
+  --accent-hover: rgba(224, 122, 95, 0.28);
 }
 
 @theme inline {
@@ -96,11 +107,19 @@ button {
   gap: 24px;
 }
 
+.site-header__actions {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-right: 56px;
+}
+
 .site-logo {
   width: 34px;
   height: 34px;
   display: inline-block;
-  background: #000;
+  background: var(--foreground);
   flex-shrink: 0;
 }
 
@@ -120,6 +139,76 @@ button {
 .site-nav a[aria-current="page"] {
   opacity: 1;
   font-weight: 700;
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 50%;
+  right: -8px;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--accent) 60%, var(--foreground));
+  color: var(--accent);
+  background: color-mix(in srgb, var(--background) 90%, transparent);
+  box-shadow: 0 8px 24px rgba(24, 24, 24, 0.08);
+  transform: translateY(-50%);
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--accent-hover);
+  transform: translateY(calc(-50% - 1px));
+}
+
+.theme-toggle__icons {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+}
+
+.theme-icon {
+  position: absolute;
+  inset: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.theme-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.theme-icon--sun {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.theme-icon--moon {
+  opacity: 0;
+  transform: scale(0.7) rotate(-24deg);
+}
+
+html[data-theme="dark"] .theme-icon--sun {
+  opacity: 0;
+  transform: scale(0.7) rotate(24deg);
+}
+
+html[data-theme="dark"] .theme-icon--moon {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
 }
 
 .site-header__line,
@@ -201,7 +290,7 @@ button {
 
 .pill-link:hover,
 .contact-submit:hover {
-  background: color-mix(in srgb, var(--accent) 12%, white);
+  background: var(--accent-hover);
   color: var(--accent);
   transform: translateY(-1px);
 }
@@ -243,7 +332,7 @@ button {
 }
 
 .scroll-top-button:hover {
-  background: color-mix(in srgb, var(--accent) 12%, white);
+  background: var(--accent-hover);
   transform: translateY(-2px);
 }
 
@@ -274,7 +363,7 @@ button {
 }
 
 .section-preview:hover {
-  background: rgba(255, 255, 255, 0.32);
+  background: var(--surface-hover);
   transform: translateY(-2px);
 }
 
@@ -337,7 +426,7 @@ button {
 }
 
 .project-frame:hover {
-  background: rgba(255, 255, 255, 0.32);
+  background: var(--surface-hover);
   border-color: color-mix(in srgb, var(--accent) 60%, var(--foreground));
   transform: translateY(-2px);
 }
@@ -403,21 +492,35 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 38px;
+  width: 46px;
+  height: 46px;
   margin-top: 18px;
-  padding: 0 18px;
+  padding: 0;
   border-radius: 999px;
   border: 1px solid color-mix(in srgb, var(--accent) 82%, white);
   color: var(--accent);
+  background: transparent;
   transition:
     background-color 0.2s ease,
     color 0.2s ease,
-    transform 0.2s ease;
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.education-eye-icon {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
 }
 
 .education-item__link:hover {
-  background: color-mix(in srgb, var(--accent) 12%, white);
+  background: var(--accent-hover);
+  border-color: var(--accent);
   transform: translateY(-1px);
+}
+
+.education-item__link:active {
+  transform: translateY(0);
 }
 
 .project-modal {
@@ -619,11 +722,18 @@ button {
   color: var(--foreground);
   font-size: 1.2rem;
   font-weight: 800;
+  --badge-bg: var(--foreground);
+  --badge-fg: #ffffff;
 }
 
 .skill-icon--figma {
   background: transparent;
-  color: #111;
+  color: var(--foreground);
+}
+
+html[data-theme="dark"] .skill-badge {
+  --badge-bg: #f0f0f0;
+  --badge-fg: #111111;
 }
 
 .skill-icon--figma svg {
@@ -695,7 +805,7 @@ button {
 
 .site-footer__socials a {
   display: inline-flex;
-  color: #111;
+  color: var(--foreground);
 }
 
 .site-footer__socials svg {
@@ -774,11 +884,29 @@ button {
     flex-direction: column;
   }
 
-  .site-nav {
+  .site-header__actions {
     width: 100%;
+    align-items: center;
     justify-content: space-between;
+    flex-direction: row;
+    gap: 10px;
+    padding-right: 0;
+  }
+
+  .site-nav {
+    flex: 1;
+    justify-content: flex-end;
     gap: 10px;
     flex-wrap: wrap;
+  }
+
+  .theme-toggle {
+    position: static;
+    transform: none;
+  }
+
+  .theme-toggle:hover {
+    transform: translateY(-1px);
   }
 
   .home-page,

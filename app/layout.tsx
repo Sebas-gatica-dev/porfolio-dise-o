@@ -4,6 +4,7 @@ import { Space_Grotesk } from "next/font/google";
 import Footer from "@/components/Footer";
 import IntroOverlay from "@/components/IntroOverlay";
 import Navbar from "@/components/Navbar";
+import ThemeProvider from "@/components/ThemeProvider";
 
 import "./globals.css";
 
@@ -20,17 +21,32 @@ export default function RootLayout({
   modal: ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function () {
+                var storedTheme = window.localStorage.getItem("portfolio-theme");
+                var theme = storedTheme === "dark" ? "dark" : "light";
+                document.documentElement.dataset.theme = theme;
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className={spaceGrotesk.className}>
-        <div className="site-shell">
-          <IntroOverlay />
-          <Navbar />
-          <main className="site-main">
-            {children}
-            {modal}
-          </main>
-          <Footer />
-        </div>
+        <ThemeProvider>
+          <div className="site-shell">
+            <IntroOverlay />
+            <Navbar />
+            <main className="site-main">
+              {children}
+              {modal}
+            </main>
+            <Footer />
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );

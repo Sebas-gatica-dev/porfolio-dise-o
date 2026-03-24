@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 import { homeIntro, portfolioSections } from "@/lib/site-data";
 
@@ -9,6 +10,20 @@ function ArrowDownIcon() {
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M6 9L12 15L18 9"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function ArrowUpIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M6 15L12 9L18 15"
         stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
@@ -42,6 +57,21 @@ function animateScrollToY(targetY: number, duration = 400) {
 }
 
 export default function HomePage() {
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 520);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   const handleScrollToSection = (slug: string) => {
     const target = document.getElementById(`home-section-${slug}`);
 
@@ -53,47 +83,60 @@ export default function HomePage() {
   };
 
   return (
-    <div className="site-width home-page">
-      <section className="hero">
-        <div className="hero__content">
-          <h1 className="hero__title">{homeIntro}</h1>
+    <>
+      <div className="site-width home-page">
+        <section className="hero">
+          <div className="hero__content">
+            <h1 className="hero__title">{homeIntro}</h1>
 
-          <div className="hero__pills" aria-label="Categorías del portfolio">
-            {portfolioSections.map((section) => (
-              <button
-                key={section.slug}
-                type="button"
-                className="pill-link"
-                onClick={() => handleScrollToSection(section.slug)}
-              >
-                {section.label}
-              </button>
-            ))}
+            <div className="hero__pills" aria-label="Categorias del portfolio">
+              {portfolioSections.map((section) => (
+                <button
+                  key={section.slug}
+                  type="button"
+                  className="pill-link"
+                  onClick={() => handleScrollToSection(section.slug)}
+                >
+                  {section.label}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
 
+          <button
+            type="button"
+            className="hero__arrow"
+            aria-label="Ir a las secciones"
+            onClick={() => handleScrollToSection(portfolioSections[0].slug)}
+          >
+            <ArrowDownIcon />
+          </button>
+        </section>
+
+        <section id="portfolio-sections" className="home-sections" aria-label="Secciones del portfolio">
+          {portfolioSections.map((section) => (
+            <Link
+              key={section.slug}
+              id={`home-section-${section.slug}`}
+              href={`/${section.slug}`}
+              className="section-preview"
+            >
+              <h2 className="section-preview__title">{section.label}</h2>
+            </Link>
+          ))}
+        </section>
+      </div>
+
+      {showScrollTop ? (
         <button
           type="button"
-          className="hero__arrow"
-          aria-label="Ir a las secciones"
-          onClick={() => handleScrollToSection(portfolioSections[0].slug)}
+          className="scroll-top-button"
+          aria-label="Volver arriba"
+          onClick={() => animateScrollToY(0, 500)}
         >
-          <ArrowDownIcon />
+          <ArrowUpIcon />
         </button>
-      </section>
-
-      <section id="portfolio-sections" className="home-sections" aria-label="Secciones del portfolio">
-        {portfolioSections.map((section) => (
-          <Link
-            key={section.slug}
-            id={`home-section-${section.slug}`}
-            href={`/${section.slug}`}
-            className="section-preview"
-          >
-            <h2 className="section-preview__title">{section.label}</h2>
-          </Link>
-        ))}
-      </section>
-    </div>
+      ) : null}
+    </>
   );
 }
