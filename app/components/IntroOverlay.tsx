@@ -11,11 +11,12 @@ export default function IntroOverlay() {
 
   useEffect(() => {
     const hasVisited = sessionStorage.getItem("hasVisitedPortfolio");
-    if (!hasVisited) {
-      setStatus("show");
-    } else {
-      setStatus("hide");
-    }
+    const nextStatus = hasVisited ? "hide" : "show";
+    const frame = window.requestAnimationFrame(() => {
+      setStatus(nextStatus);
+    });
+
+    return () => window.cancelAnimationFrame(frame);
   }, []);
 
   const handleComplete = () => {

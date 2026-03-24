@@ -1,33 +1,36 @@
-import "./globals.css";
-import { Inter } from "next/font/google";
-import Navbar from "@/components/Navbar";
+import type { ReactNode } from "react";
+import { Space_Grotesk } from "next/font/google";
+
 import Footer from "@/components/Footer";
 import IntroOverlay from "@/components/IntroOverlay";
+import Navbar from "@/components/Navbar";
 
-const inter = Inter({ subsets: ["latin"] });
+import "./globals.css";
 
-export default function RootLayout({ 
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+});
+
+export default function RootLayout({
   children,
-  modal, 
-}: { 
-  children: React.ReactNode;
-  modal: React.ReactNode; 
-}) {
+  modal,
+}: Readonly<{
+  children: ReactNode;
+  modal: ReactNode;
+}>) {
   return (
     <html lang="es">
-      <body className={`${inter.className} bg-white text-black antialiased relative`}>
-        {/* Mantenemos la Intro aquí. 
-          Al estar al final o tener un z-index alto, tapará el children 
-          apenas el navegador empiece a pintar.
-        */}
-        <IntroOverlay />
-
-        <Navbar />
-        <main className="min-h-screen pt-20 px-4 md:px-10">
-          {children}
-          {modal}
-        </main>
-        <Footer />
+      <body className={spaceGrotesk.className}>
+        <div className="site-shell">
+          <IntroOverlay />
+          <Navbar />
+          <main className="site-main">
+            {children}
+            {modal}
+          </main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

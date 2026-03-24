@@ -1,7 +1,6 @@
 "use client";
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
 
 export default function ProyectoModal({ params }: { params: { id: string } }) {
   const router = useRouter();
