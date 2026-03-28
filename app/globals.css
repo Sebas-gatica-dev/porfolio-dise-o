@@ -116,11 +116,30 @@ button {
 }
 
 .site-logo {
-  width: 34px;
-  height: 34px;
-  display: inline-block;
-  background: var(--foreground);
+  width: 138px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
   flex-shrink: 0;
+}
+
+.site-logo__mark {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.site-logo__mark--dark {
+  display: none;
+}
+
+html[data-theme="dark"] .site-logo__mark--light {
+  display: none;
+}
+
+html[data-theme="dark"] .site-logo__mark--dark {
+  display: block;
 }
 
 .site-nav {
@@ -232,6 +251,33 @@ html[data-theme="dark"] .theme-icon--moon {
 .site-main {
   flex: 1;
   width: 100%;
+}
+
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.intro-overlay--loading {
+  z-index: 120;
+}
+
+.intro-overlay__signature {
+  width: min(760px, calc(100vw - 48px));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signature-mark--intro {
+  width: 100%;
+  height: auto;
 }
 
 .home-page {
@@ -753,6 +799,14 @@ html[data-theme="dark"] .skill-badge {
   gap: 8px;
 }
 
+.contact-honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .contact-field label {
   font-size: 1.02rem;
 }
@@ -782,6 +836,26 @@ html[data-theme="dark"] .skill-badge {
   min-width: 124px;
   margin-top: 4px;
   cursor: pointer;
+}
+
+.contact-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.contact-feedback {
+  margin: 2px 0 0;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.contact-feedback--ok {
+  color: color-mix(in srgb, var(--accent) 78%, var(--foreground));
+}
+
+.contact-feedback--error {
+  color: #d94f3d;
 }
 
 .site-footer {
@@ -907,6 +981,11 @@ html[data-theme="dark"] .skill-badge {
 
   .theme-toggle:hover {
     transform: translateY(-1px);
+  }
+
+  .site-logo {
+    width: 108px;
+    height: 34px;
   }
 
   .home-page,

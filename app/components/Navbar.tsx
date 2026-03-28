@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -45,7 +46,24 @@ export default function Navbar() {
     <header className="site-header">
       <div className="site-width site-header__inner">
         <div className="site-header__row">
-          <Link href="/" aria-label="Ir al inicio" className="site-logo" />
+          <Link href="/" aria-label="Ir al inicio" className="site-logo">
+            <Image
+              src="/logos/signature-black.svg"
+              alt=""
+              width={138}
+              height={42}
+              priority
+              className="site-logo__mark site-logo__mark--light"
+            />
+            <Image
+              src="/logos/signature-white.svg"
+              alt=""
+              width={138}
+              height={42}
+              priority
+              className="site-logo__mark site-logo__mark--dark"
+            />
+          </Link>
 
           <div className="site-header__actions">
             <nav className="site-nav" aria-label="Navegacion principal">
