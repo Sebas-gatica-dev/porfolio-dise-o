@@ -1,3 +1,5 @@
+import { withBasePath } from "@/lib/base-path";
+
 export type ProjectModalSection = {
   title: string;
   body: string;
@@ -44,7 +46,7 @@ export const portfolioSections: PortfolioSection[] = [
         client: "Proyecto académico",
         overview:
           "Sistema visual y de experiencia para una plataforma de cine latinoamericano, con foco en navegación simple, descubrimiento de contenido y una interfaz clara para distintos tipos de usuario.",
-        imageSrc: "/img/ux-ui/test-img.png",
+        imageSrc: withBasePath("/img/ux-ui/test-img.png"),
         modalSections: [
           {
             title: "desafío",
@@ -70,7 +72,7 @@ export const portfolioSections: PortfolioSection[] = [
         client: "Concept redesign",
         overview:
           "Exploración de mejoras de usabilidad para una plataforma profesional, repensando la lectura del perfil, la jerarquía de acciones y la visualización de vínculos.",
-        imageSrc: "/img/ux-ui/test-img.png",
+        imageSrc: withBasePath("/img/ux-ui/test-img.png"),
         modalSections: [
           {
             title: "problema detectado",
@@ -109,7 +111,7 @@ export const portfolioSections: PortfolioSection[] = [
         client: "Proyecto académico",
         overview:
           "Diseño editorial orientado a la claridad, donde la información técnica se ordena con una estructura visual limpia y una secuencia de lectura intuitiva.",
-        imageSrc: "/img/editorial/test-img.png",
+        imageSrc: withBasePath("/img/editorial/test-img.png"),
         modalSections: [
           {
             title: "estructura",
@@ -130,7 +132,7 @@ export const portfolioSections: PortfolioSection[] = [
         client: "Proyecto cultural",
         overview:
           "Catálogo diseñado para destacar contenido visual y textual con equilibrio, cuidando tanto la narrativa general como el ritmo de cada doble página.",
-        imageSrc: "/img/editorial/test-img.png",
+        imageSrc: withBasePath("/img/editorial/test-img.png"),
         modalSections: [
           {
             title: "concepto",
@@ -164,7 +166,7 @@ export const portfolioSections: PortfolioSection[] = [
         client: "Proyecto conceptual",
         overview:
           "Sistema de identidad para un evento deportivo de gran escala, desarrollado para adaptarse a soportes editoriales, señalética, piezas promocionales y comunicación digital.",
-        imageSrc: "/img/branding/test-img.png",
+        imageSrc: withBasePath("/img/branding/test-img.png"),
         modalSections: [
           {
             title: "universo visual",
@@ -203,7 +205,7 @@ export const portfolioSections: PortfolioSection[] = [
         client: "Proyecto académico",
         overview:
           "Pieza gráfica centrada en una atmósfera oscura y narrativa, donde imagen, tipografía y composición construyen tensión visual desde el primer vistazo.",
-        imageSrc: "/img/afiches/test-img.png",
+        imageSrc: withBasePath("/img/afiches/test-img.png"),
         modalSections: [
           {
             title: "búsqueda estética",
@@ -224,7 +226,7 @@ export const portfolioSections: PortfolioSection[] = [
         client: "Evento cultural",
         overview:
           "Diseño de afiche orientado a difusión y recordación, combinando una composición directa con recursos de color y jerarquía tipográfica para máxima visibilidad.",
-        imageSrc: "/img/afiches/test-img.png",
+        imageSrc: withBasePath("/img/afiches/test-img.png"),
         modalSections: [
           {
             title: "objetivo",
@@ -258,7 +260,7 @@ export const portfolioSections: PortfolioSection[] = [
         client: "UNLa",
         overview:
           "Proyecto de arquigrafía para un espacio institucional, combinando señalética, identidad y experiencia de recorrido dentro de un entorno físico.",
-        imageSrc: "/img/arquigrafia/test-img.png",
+        imageSrc: withBasePath("/img/arquigrafia/test-img.png"),
         modalSections: [
           {
             title: "enfoque",
@@ -309,13 +311,13 @@ export const educationItems: EducationItem[] = [
     institution: "Coderhouse",
     detail: "2025- 2025 (duración de 3 meses)",
     meta: "Certificado",
-    certificateUrl: "/certifications/pdf-prueba.pdf",
+    certificateUrl: withBasePath("/certifications/pdf-prueba.pdf"),
   },
   {
     title: "Curso avanzado de diseño UX UI",
     institution: "Coderhouse",
     detail: "2025- 2026 (duración de 2 meses y medio)",
     meta: "Certificado",
-    certificateUrl: "/certifications/pdf-prueba.pdf",
+    certificateUrl: withBasePath("/certifications/pdf-prueba.pdf"),
   },
 ];

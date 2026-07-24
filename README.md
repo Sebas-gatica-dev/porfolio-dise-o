@@ -97,6 +97,23 @@ SI llegaste hasta ahi.. abriste el enlace y te llevo a la app en local, dejame f
 
 Abrir [http://localhost:3000](http://localhost:3000) con ctrl + click.
 
+## Despliegue en SgInfra
+
+La imagen de produccion usa el modo `standalone` de Next.js y se publica en:
+
+```text
+https://sgdev.com.ar/soff-portfolio/
+```
+
+El archivo `compose.sgdev.yml` no publica puertos del host. El trafico entra por
+el proxy central de SgInfra y llega al alias interno `soff-portfolio-web:3000`.
+
+Para construir localmente con la misma ruta publica:
+
+```bash
+docker build --build-arg NEXT_PUBLIC_BASE_PATH=/soff-portfolio -t soff-portfolio .
+```
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

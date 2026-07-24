@@ -2,6 +2,8 @@
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 
+import { withBasePath } from '@/lib/base-path';
+
 export default function ProyectoModal({ params }: { params: { id: string } }) {
   const router = useRouter();
 
@@ -27,7 +29,7 @@ export default function ProyectoModal({ params }: { params: { id: string } }) {
           <div className="flex gap-4">
             {/* BOTÓN: IR A PÁGINA COMPLETA */}
             <button 
-              onClick={() => window.location.href = `/proyecto/${params.id}`}
+              onClick={() => window.location.href = withBasePath(`/proyecto/${params.id}/`)}
               className="text-xs uppercase font-bold hover:underline"
             >
               Ver página completa ↗

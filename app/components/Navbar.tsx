@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { basePath, withBasePath } from "@/lib/base-path";
 import { navigationLinks } from "@/lib/site-data";
 
 import { useTheme } from "@/components/ThemeProvider";
@@ -41,6 +42,14 @@ function MoonIcon() {
 export default function Navbar() {
   const pathname = usePathname();
   const { toggleTheme } = useTheme();
+  const pathnameWithoutBase =
+    basePath && (pathname === basePath || pathname.startsWith(`${basePath}/`))
+      ? pathname.slice(basePath.length) || "/"
+      : pathname;
+  const activePath =
+    pathnameWithoutBase.length > 1
+      ? pathnameWithoutBase.replace(/\/+$/, "")
+      : pathnameWithoutBase;
 
   return (
     <header className="site-header">
@@ -48,7 +57,7 @@ export default function Navbar() {
         <div className="site-header__row">
           <Link href="/" aria-label="Ir al inicio" className="site-logo">
             <Image
-              src="/logos/signature-black.svg"
+              src={withBasePath("/logos/signature-black.svg")}
               alt=""
               width={138}
               height={42}
@@ -56,7 +65,7 @@ export default function Navbar() {
               className="site-logo__mark site-logo__mark--light"
             />
             <Image
-              src="/logos/signature-white.svg"
+              src={withBasePath("/logos/signature-white.svg")}
               alt=""
               width={138}
               height={42}
@@ -68,7 +77,7 @@ export default function Navbar() {
           <div className="site-header__actions">
             <nav className="site-nav" aria-label="Navegacion principal">
               {navigationLinks.map((link) => {
-                const isActive = pathname === link.href;
+                const isActive = activePath === link.href;
 
                 return (
                   <Link

@@ -2,6 +2,8 @@
 
 import { type FormEvent, useState } from "react";
 
+import { withBasePath } from "@/lib/base-path";
+
 type SubmitStatus = "idle" | "sending" | "success" | "error";
 
 export default function ContactPage() {
@@ -33,7 +35,7 @@ export default function ContactPage() {
     setFeedback("Enviando mensaje...");
 
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch(withBasePath("/api/contact/"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

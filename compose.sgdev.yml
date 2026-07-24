@@ -1,0 +1,38 @@
+name: sgdev-soff-portfolio
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_BASE_PATH: ${NEXT_PUBLIC_BASE_PATH:-/soff-portfolio}
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      NEXT_PUBLIC_BASE_PATH: ${NEXT_PUBLIC_BASE_PATH:-/soff-portfolio}
+      MAILTRAP_API_TOKEN: ${MAILTRAP_API_TOKEN:-}
+      CONTACT_TO_EMAIL: ${CONTACT_TO_EMAIL:-sofiamaggiotti123@gmail.com}
+      MAIL_FROM_EMAIL: ${MAIL_FROM_EMAIL:-no-reply@portfolio.local}
+      MAIL_FROM_NAME: ${MAIL_FROM_NAME:-Portfolio Sofia}
+    expose:
+      - "3000"
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - fetch('http://127.0.0.1:3000/soff-portfolio/').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    networks:
+      proxy:
+        aliases:
+          - soff-portfolio-web
+
+networks:
+  proxy:
+    external: true
+    name: ${PROXY_NETWORK:-sgdev-proxy}
