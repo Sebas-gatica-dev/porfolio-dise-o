@@ -1,42 +1,51 @@
 "use client";
 
-import { useState } from "react";
+import { useState, createContext, useContext } from "react";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import Lottie from "lottie-react";
-import signatureAnimation from "../../public/lottie/signature_anim.lottie.json";
 
-type IntroStatus = "show" | "hide";
+const IntroContext = createContext<{ introDone: boolean }>({ introDone: true });
 
-export default function IntroOverlay() {
+export function useIntroStatus() {
+  return useContext(IntroContext);
+}
+
+export function IntroProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const [status, setStatus] = useState<IntroStatus>(() =>
-    pathname === "/" ? "show" : "hide",
-  );
-  const shouldShowOverlay = status === "show" && pathname === "/";
-
-  const handleComplete = () => {
-    setStatus("hide");
-  };
+  const [introDone, setIntroDone] = useState(() => pathname !== "/");
 
   return (
-    <AnimatePresence>
-      {shouldShowOverlay && (
-        <motion.div
-          className="intro-overlay"
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
-        >
-          <div className="intro-overlay__signature">
-            <Lottie
-              animationData={signatureAnimation}
-              loop={false}
-              onComplete={handleComplete}
-            />
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <IntroContext.Provider value={{ introDone }}>
+      {children}
+      <AnimatePresence>
+        {!introDone && pathname === "/" && (
+          <motion.div
+            className="intro-overlay"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6, ease: "easeInOut" }}
+          >
+            <div className="intro-typing">
+              <motion.div
+                className="intro-typing__reveal"
+                initial={{ clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)" }}
+                animate={{ clipPath: "polygon(0 0, 110% 0, 110% 100%, 0 100%)" }}
+                transition={{ duration: 1.8, ease: [0.22, 0.61, 0.36, 1] }}
+                onAnimationComplete={() => {
+                  setTimeout(() => setIntroDone(true), 500);
+                }}
+              >
+                <span className="intro-typing__text">Soff</span>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </IntroContext.Provider>
   );
+}
+
+// Keep default export for backward compat, but we'll use IntroProvider now
+export default function IntroOverlay() {
+  return null;
 }

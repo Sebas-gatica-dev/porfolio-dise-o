@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
   output: "standalone",
   basePath,
   trailingSlash: true,
+  devIndicators: false,
 };
 
 export default nextConfig;

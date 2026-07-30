@@ -1,15 +1,21 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { BehanceIcon, LinkedInIcon } from "@/components/SocialIcons";
 
 export default function Footer() {
+  const pathname = usePathname();
+  const isAboutPage = pathname === "/sobre-mi";
+
   return (
-    <footer className="site-footer">
+    <footer className={`site-footer${isAboutPage ? " site-footer--about" : ""}`}>
       <div className="site-width">
-        <div className="site-footer__line" />
+        {isAboutPage ? null : <div className="site-footer__line" />}
 
         <div className="site-footer__content">
-          <p>©2026 Sg.dev. Todos los derecho reservados</p>
+          {isAboutPage ? null : <p>©2026 Sg.dev. Todos los derecho reservados</p>}
 
           <div className="site-footer__socials" aria-label="Redes sociales">
             <Link href="https://www.behance.net/" target="_blank" rel="noreferrer">

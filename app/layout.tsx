@@ -2,9 +2,9 @@ import type { ReactNode } from "react";
 import { Space_Grotesk } from "next/font/google";
 
 import Footer from "@/components/Footer";
-import IntroOverlay from "@/components/IntroOverlay";
 import Navbar from "@/components/Navbar";
 import ThemeProvider from "@/components/ThemeProvider";
+import ShellClient from "@/components/ShellClient";
 
 import "./globals.css";
 
@@ -37,15 +37,14 @@ export default function RootLayout({
       </head>
       <body className={spaceGrotesk.className}>
         <ThemeProvider>
-          <div className="site-shell">
-            <IntroOverlay />
+          <ShellClient>
             <Navbar />
             <main className="site-main">
               {children}
               {modal}
             </main>
             <Footer />
-          </div>
+          </ShellClient>
         </ThemeProvider>
       </body>
     </html>

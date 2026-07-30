@@ -1,10 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { basePath, withBasePath } from "@/lib/base-path";
+import { basePath } from "@/lib/base-path";
 import { navigationLinks } from "@/lib/site-data";
 
 import { useTheme } from "@/components/ThemeProvider";
@@ -50,28 +49,17 @@ export default function Navbar() {
     pathnameWithoutBase.length > 1
       ? pathnameWithoutBase.replace(/\/+$/, "")
       : pathnameWithoutBase;
+  const isAboutPage = activePath === "/sobre-mi";
+  const headerClassName = `site-header ${
+    isAboutPage ? "site-header--about" : "site-header--portfolio"
+  }`;
 
   return (
-    <header className="site-header">
+    <header className={headerClassName}>
       <div className="site-width site-header__inner">
         <div className="site-header__row">
           <Link href="/" aria-label="Ir al inicio" className="site-logo">
-            <Image
-              src={withBasePath("/logos/signature-black.svg")}
-              alt=""
-              width={138}
-              height={42}
-              priority
-              className="site-logo__mark site-logo__mark--light"
-            />
-            <Image
-              src={withBasePath("/logos/signature-white.svg")}
-              alt=""
-              width={138}
-              height={42}
-              priority
-              className="site-logo__mark site-logo__mark--dark"
-            />
+            <span className="site-logo__text">Soff</span>
           </Link>
 
           <div className="site-header__actions">

@@ -28,9 +28,9 @@ function EyeIcon() {
 
 export default function AboutPage() {
   return (
-    <div className="site-width info-page">
+    <div className="site-width info-page about-page">
       <section className="info-page__hero">
-        <h1>sobre mi</h1>
+        <h1>sobre mí</h1>
         {aboutParagraphs.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
@@ -38,25 +38,28 @@ export default function AboutPage() {
 
       <section className="about-grid">
         <div className="about-column">
-          <h2>formacion academica</h2>
+          <h2>formación academica</h2>
 
           <div className="education-list">
-            {educationItems.map((item) => (
+            {educationItems.map((item, index) => (
               <article key={item.title} className="education-item">
                 <h3>{item.title}</h3>
                 <p>{item.institution}</p>
                 <span>{item.detail}</span>
-                {item.meta ? <span>{item.meta}</span> : null}
                 {item.certificateUrl ? (
                   <a
                     href={item.certificateUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="education-item__link"
+                    className={`education-item__link ${
+                      index === 1 ? "education-item__link--icon" : "education-item__link--text"
+                    }`}
                     aria-label="Ver certificado"
                   >
-                    <EyeIcon />
+                    {index === 1 ? <EyeIcon /> : item.meta || "Certificado"}
                   </a>
+                ) : item.meta ? (
+                  <span>{item.meta}</span>
                 ) : null}
               </article>
             ))}
